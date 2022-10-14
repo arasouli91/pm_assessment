@@ -1,0 +1,83 @@
+.container {
+  max-width: 960px;
+}
+
+.q-left-pane{
+  margin-right: 30px;
+  flex-basis: 60%;
+}
+
+.qlp-qid{
+  flex-grow: 1;
+}
+.qlp-def{
+  margin-right: 30px;
+}
+
+.qlp-name{
+  flex-basis: 20%;
+  align-self: center;
+}
+
+td a svg{
+  margin-bottom: 3px;
+}
+
+.drag {
+  margin-bottom: -8px;
+}
+
+.h-txt{
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.q-desc{
+  flex-grow: 1;
+}
+
+.q-desc input{
+  height: 400px; 
+}
+
+.grey-row{
+  background-color: #dee2e6;
+}
+
+.env-col{
+  width:65%; 
+}
+
+.hide{
+  display: none;
+} 
+
+.proc-order-ul {
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+ 
+.arrow-btn{ 
+  margin-right: 3px;  
+  list-style-type: none;
+  height: 32px;
+} 
+
+.q-n{
+  margin-left: 4px;
+  margin-top: 4px;  
+  font-weight: 700; 
+  list-style-type: none;
+}
+ 
+.flx-wrp {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
+.modal-content{  
+  overflow-y: scroll !important;   
+}

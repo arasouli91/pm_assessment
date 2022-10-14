@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>ProMiles: Manage Queues</title>
+
+  <link href="styles.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+
+<body class="bg-light">
+  <div class="container">
+    <div class="py-5 text-center">
+      <h2>Manage Queues</h2>
+    </div>
+    <div class="container mt-4">
+      <h4 class="justify-content-between align-items-center mb-4">
+        <span class="text-muted">Manage Permit Queues</span>
+      </h4>
+      <!--Queues Table-->
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Default?</th>
+              <th class="w-75">Queue Name</th>
+              <th>Permits</th>
+              <th>Envelopes</th>
+              <th>Statuses</th>
+              <th>Amend<br />Requests</th>
+              <th>Edit</th>
+              <th>Delete</th>
+              <th>Process Order</th> 
+            </tr>
+          </thead>
+          <tbody id="queue-list"></tbody>
+        </table>
+      </div>
+      <!--Open Add Queue Modal-->
+      <button type="button" id="addQueueBtn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEditModal">
+        Add Queue
+      </button>
+
+      <!-- Add/Edit Queue Modal Page -->
+      <div class="modal fade" id="addEditModal" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-scrollable modal-xl">
+          <div class="modal-content">
+            <!--Tabbed navigation-->
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="queue-tab" data-bs-toggle="tab" data-bs-target="#queue-tab-pane">
+                  Queue
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="permit-tab" data-bs-toggle="tab" data-bs-target="#permit-tab-pane">
+                  Permits
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="envelope-tab" data-bs-toggle="tab" data-bs-target="#envelope-tab-pane">
+                  Envelopes
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="status-tab" data-bs-toggle="tab" data-bs-target="#status-tab-pane">
+                  Statuses
+                </button>
+              </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+              <form id="queue-form">
+                <div class="modal-body">
+                  <!--Queue Tab-->
+                  <div class="tab-pane fade show active" id="queue-tab-pane" role="tabpanel">
+                    <!--Add/Edit Queue Content-->
+                    <div class="modal-header">
+                      <h5 class="modal-title">Add Queue</h5>
+                    </div>
+
+                    <div class="flx-wrp">
+                      <!--Left pane-->
+                      <div class="q-left-pane">
+                        <div class="flx-wrp">
+                          <div class="h-txt qlp-qid">
+                            Queue ID: <span id="qId"></span>
+                          </div>
+                          <div class="qlp-def">
+                            <div class="form-check">
+                              <label class="h-txt form-check-label" for="chkDefault">
+                                Make Default
+                              </label>
+                              <input class="form-check-input" type="checkbox" value="" id="chkDefault">
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-group d-flex mt-3">
+                          <label class="h-txt qlp-name" for="title">Queue Name:</label>
+                          <input type="text" id="qName" class="form-control qlp-qid">
+                        </div>
+
+                        <div class="form-group mt-4">
+                          <div>
+                            <h6>Allow Out-of-Order Access:</h6>
+                          </div>
+                          <label class="form-check-label mt-3" for="chkOutOrderAcc">
+                            <input class="form-check-input" type="checkbox" value="" id="chkOutOrderAcc">
+                            <span>Allow ODOT Users to access permits out of order for this queue.</span>
+                          </label>
+                        </div>
+
+                        <div class="form-group mt-4">
+                          <div>
+                            <h6>Working Queue Only:</h6>
+                          </div>
+                          <label class="form-check-label mt-3" for="chkWorkQueue">
+                            <input class="form-check-input" type="checkbox" value="" id="chkWorkQueue">
+                            <span>This queue will be used to display locked permits.</span>
+                          </label>
+                        </div>
+
+                        <div class="form-group mt-4">
+                          <div>
+                            <h6>Amend Request Permits:</h6>
+                          </div>
+                          <label class="form-check-label mt-1" for="checkOutOrderAcc">
+                            <input class="form-check-input" type="checkbox" value="" id="chkAmendReq">
+                            <span>This queue will be used to display Amend Request permits.</span>
+                          </label>
+                        </div>
+
+                        <div class="form-group mt-4">
+                          <div>
+                            <h6>Queue Balancing Mode:</h6>
+                          </div>
+                          <label class="form-check-label mt-1" for="chkBalMode">
+                            <input class="form-check-input" type="checkbox" value="" id="chkBalMode">
+                            <span>The permits in this queue will be used in Balancing Mode.</span>
+                          </label>
+                        </div>
+                      </div>
+                      <!--END Left pane-->
+
+                      <div class="q-desc">
+                        <div class="form-group">
+                          <label class="h-txt mb-1" for="q-desc">Queue Description:</label>
+                          <textarea class="form-control mt-3" id="qDesc" cols="30" rows="16"></textarea>  
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <!--Permits Tab-->
+                  <div class="tab-pane fade" id="permit-tab-pane" role="tabpanel" hidden>
+                    <div class="modal-header">
+                      <h5 class="modal-title">Permits</h5>
+                    </div>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>Permit</th>
+                            <th>Delete</th> 
+                          </tr>
+                        </thead>
+                        <tbody id="permit-list"></tbody>
+                      </table>
+                    </div>
+                    <button id="addPermit" type="button" class="btn btn-primary">
+                      Add New Permit
+                    </button>
+                  </div>
+                  <!--Envelopes Tab-->
+                  <div class="tab-pane fade" id="envelope-tab-pane" role="tabpanel" hidden>
+                    <div class="modal-header">
+                      <h5 class="modal-title">Envelopes</h5>
+                    </div>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th class="env-col">Envelope</th>
+                            <th>Min</th>
+                            <th>Max</th>
+                            <th>Delete</th>
+                          </tr>
+                        </thead>
+                        <tbody id="envelope-list"></tbody>
+                      </table>
+                    </div>
+                    <button id="addEnvelope" type="button" class="btn btn-primary">
+                      Add New Envelope
+                    </button>
+                  </div>
+                  <!--Statuses Tab-->
+                  <div class="tab-pane fade" id="status-tab-pane" role="tabpanel" hidden> 
+                    <div class="modal-header">
+                      <h5 class="modal-title">Statuses</h5>
+                    </div>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>Status</th>
+                            <th>Delete</th>
+                          </tr>
+                        </thead>
+                        <tbody id="status-list"></tbody>
+                      </table>
+                    </div>
+                    <button id="addStatus" type="button" class="btn btn-primary">
+                      Add New Status
+                    </button>
+                  </div>
+
+                </div>
+
+                <div class="modal-footer">
+                  <button type="button" id="addEditCancel" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                  <!--Submit add/edit queue form-->
+                  <input type="submit" id="addEditSubmit" value="Save Queue" class="btn btn-primary btn-block" data-bs-dismiss="modal">
+                </div>
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="my-5 pt-5 text-muted text-center text-small">
+      <p class="mb-1">&copy; 2022 ProMiles</p>
+      <ul class="list-inline">
+        <li class="list-inline-item"><a href="#">Privacy</a></li>
+        <li class="list-inline-item"><a href="#">Terms</a></li>
+        <li class="list-inline-item"><a href="#">Support</a></li>
+      </ul>
+    </footer>
+
+  </div> 
+  <script src="Svg.js"></script>
+  <script src="Util.js"></script>
+  <script src="Permit.js"></script>
+  <script src="Status.js"></script>
+  <script src="Envelope.js"></script>
+  <script src="Store.js"></script>
+  <script src="Queue.js"></script>
+  <script src="Main.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script>window.jQuery || document.write('<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"><\/script>')</script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
